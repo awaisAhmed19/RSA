@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 # RSA
-=======
 
 # RSA Encryption and Decryption in Java
 
@@ -73,4 +71,3 @@ Pull requests are welcome! If you have suggestions for improving the project, fe
 ---
 Made with ❤️ by [Awais Ahmed]
 
->>>>>>> 5905e2d (RSA BigInteger testing)
