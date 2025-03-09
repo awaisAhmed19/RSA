@@ -1,16 +1,25 @@
-import java.lang.Math.*;
-import java.utils.*;
+import java.math.*;
+import java.util.*;
 public class Utils{
 
+  public BigInteger Totient(BigInteger a,BigInteger b){
+    return a.subtract(BigInteger.ONE).multiply(b.subtract(BigInteger.ONE));
+  }
   public BigInteger GCD(BigInteger a, BigInteger b) {
     if (b.equals(BigInteger.ZERO)) {
         return a;
     }return GCD(b,a.mod(b).abs());
   }
+  public BigInteger generate_random(int range){
+    BigInteger n = BigInteger.probablePrime(range, new Random());
+    return n;
+  }
+
   public BigInteger generate_random(){
     BigInteger n = BigInteger.probablePrime(1024, new Random());
     return n;
   }
+
   public BigInteger power(BigInteger base,BigInteger expo, BigInteger m){
     BigInteger res=BigInteger.ONE;
     base=base.mod(m);
@@ -30,7 +39,7 @@ public class Utils{
     if(x.compareTo(BigInteger.ZERO)<0){
       x=x.add(phi);
     }
-    return x
+    return x;
   }
 
   public BigInteger[] extendedGCD(BigInteger a,BigInteger b){
@@ -40,7 +49,7 @@ public class Utils{
     BigInteger[] value= extendedGCD(b,a.mod(b));
     BigInteger x=value[1];
     BigInteger y=value[0].subtract(a.divide(b).multiply(value[1]));
-    return new BigInteger[]{x,y,values[2]};
+    return new BigInteger[]{x,y,value[2]};
   }
 
 }
