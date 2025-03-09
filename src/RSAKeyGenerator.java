@@ -1,17 +1,17 @@
-import java.util.*;
+package src;
+import Utils.Utils;
 import java.math.BigInteger;
-
-public class RSAKeygeneration{
+public class RSAKeyGenerator{
   Utils u=new Utils();
   BigInteger n,phi,e,d,p,q;
-  RSAKeygeneration(int range){
+  RSAKeyGenerator(int range){
     this.p=u.generate_random(range);
     this.q=u.generate_random(range);
     this.n=p.multiply(q);
     this.phi = u.Totient(p,q);
     this.e=BigInteger.ZERO;
   }
-  RSAKeygeneration(){
+  RSAKeyGenerator(){
     this.p=u.generate_random();
     this.q=u.generate_random();
     this.n=p.multiply(q);
@@ -33,10 +33,5 @@ public class RSAKeygeneration{
   public BigInteger Priv_key(){
     return u.modInverse(this.e,this.phi);
   }
-  public static void main(String args []){
-    RSAKeygeneration R=new RSAKeygeneration();
-    System.out.println(R.Pub_key());
-    System.out.println(R.Priv_key());
-    System.out.println(R.phi);
-  }
+
 }
