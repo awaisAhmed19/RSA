@@ -1,37 +1,57 @@
 package src;
 
 import Utils.BaseConvertor;
-import java.math.*;
-import java.util.*;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Random;
 
-public class Main{
+public class Main {
+
+    public static void main(String args[]) {
+        // Initialize required classes
+        BaseConvertor converter = new BaseConvertor();
+        Random rand = new Random();
+        RSAKeyGenerator keyGen = new RSAKeyGenerator();
+        RSAEncryptor encryptor = new RSAEncryptor();
+        RSADecryptor decryptor = new RSADecryptor();
+
+        // Generate RSA Keys
+        BigInteger n = keyGen.n;
+        BigInteger e = keyGen.Pub_key();
+        BigInteger d = keyGen.Priv_key();
+
+        // Input Message
+        String message = "Hello world my name is awais.";
+
+        // Convert message to ASCII values
+        ArrayList<Integer> asciiValues = converter.StringToAscii(message);
+        System.out.println("\n🔹 Original Message: " + message);
+        System.out.println("\n🔢 ASCII Representation:");
+        for (Integer val : asciiValues) {
+            System.out.print(val + " ");
+        }
+        System.out.println("\n");
+
+        // Encrypt the ASCII values
+        ArrayList<BigInteger> cipher = encryptor.Encrypt(asciiValues, e, n);
+        System.out.println("🔐 Ciphertext (Encrypted ASCII):");
+        for (BigInteger c : cipher) {
+            String encodedCipher = converter.encode(c);git
+            System.out.println(encodedCipher.length() >= 10 ? encodedCipher.substring(0, 10) + "..." : encodedCipher);
  
-  public static void main(String args[]) {
-    //Utils u= new Utils();
-    BaseConvertor a=new BaseConvertor();
-    Random rand=new Random();
-    RSAKeyGenerator Rg=new RSAKeyGenerator();
-    RSAEncryptor Re=new RSAEncryptor();
-    RSADecryptor Rd=new RSADecryptor();
+        }
+        System.out.println("\n");
 
-    BigInteger n=Rg.n;
-    BigInteger e=Rg.Pub_key();
-    BigInteger d=Rg.Priv_key();
-    ArrayList<Integer> st=a.StringToAscii("Hello world my name is awais.");
-    ArrayList<BigInteger> cipher=Re.Encrypt(st,e,n);
-    ArrayList<BigInteger> decipher=Rd.Decrypt(cipher,d,n);
+        // Decrypt the Ciphertext back to ASCII
+        ArrayList<BigInteger> decryptedAscii = decryptor.Decrypt(cipher, d, n);
+        System.out.println("🔓 Decrypted ASCII Values:");
+        for (BigInteger val : decryptedAscii) {
+            System.out.print(val + " ");
+        }
+        System.out.println("\n");
 
-    System.out.println("Hello world:");
-    for (Integer s : st) {
-      System.out.println(s);
+        // Convert ASCII back to readable text
+        String decryptedMessage = converter.AsciiToString(decryptedAscii);
+        System.out.println("📝 Decrypted Message: " + decryptedMessage);
     }
-
-    System.out.println("Cipher: Hello world:");
-    for (BigInteger c : cipher) {
-      System.out.println(a.encode(c));
-    }
-    System.out.println("Decipher: Hello world:");
-    System.out.println(a.AsciiToString(decipher));
-    
-  }
 }
